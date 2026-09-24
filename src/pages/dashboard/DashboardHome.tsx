@@ -22,6 +22,7 @@ import { AnimatedCounter } from "@/components/dashboard/AnimatedCounter";
 import { motion } from "framer-motion";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { EyeTodayScreen } from "@/components/dashboard/eye/EyeTodayScreen";
 import { PageTourButton } from "@/components/dashboard/tour/PageTourButton";
 
 /* ─── Colour maps ────────────────────────────────────────────── */
@@ -108,7 +109,7 @@ function getGreeting() {
 /* ═══════════════════════════════════════════════════════════════
    Dashboard Home — Premium Bento Layout
 ═══════════════════════════════════════════════════════════════ */
-export default function DashboardHome() {
+function StandardDashboardHome() {
   const [revPeriod, setRevPeriod] = useState<"6M" | "1Y">("6M");
 
   const { data: stats } = useDashboardStats();
@@ -678,4 +679,10 @@ export default function DashboardHome() {
 
     </div>
   );
+}
+
+export default function DashboardHome() {
+  const { currentOrg } = useOrg();
+  if (currentOrg?.clinic_type === "eye") return <EyeTodayScreen />;
+  return <StandardDashboardHome />;
 }
