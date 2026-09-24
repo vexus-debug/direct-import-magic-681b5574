@@ -144,7 +144,7 @@ export default function MyProfilePage() {
                 </div>
                 <div className="flex justify-between py-2">
                   <span className="text-muted-foreground">Roles</span>
-                  <span>{roles.map(getRoleLabel).join(", ") || "None assigned"}</span>
+                  <span>{roles.map((r) => getRoleLabel(r)).join(", ") || "None assigned"}</span>
                 </div>
               </div>
               <Button variant="outline" onClick={() => setEditing(true)}>

@@ -217,7 +217,7 @@ export default function MessagesPage() {
                       ))}
                       {availableRecipients.map((u) => (
                         <SelectItem key={u.user_id} value={u.user_id}>
-                          {u.full_name} ({u.roles.map(getRoleLabel).join(", ")})
+                          {u.full_name} ({u.roles.map((r) => getRoleLabel(r)).join(", ")})
                         </SelectItem>
                       ))}
                     </SelectContent>

@@ -125,9 +125,9 @@ export default function DashboardHome() {
   const schedule = todayAppointments || [];
   const recentActivities = activities || [];
 
-  const canSeePatients     = hasPageAccess(orgRole, "patients");
-  const canSeeBilling      = hasPageAccess(orgRole, "billing");
-  const canSeeAppointments = hasPageAccess(orgRole, "appointments");
+  const canSeePatients     = hasPageAccess(orgRole, "patients", currentOrg?.clinic_type);
+  const canSeeBilling      = hasPageAccess(orgRole, "billing", currentOrg?.clinic_type);
+  const canSeeAppointments = hasPageAccess(orgRole, "appointments", currentOrg?.clinic_type);
 
   /* Quick actions */
   const quickActions = [

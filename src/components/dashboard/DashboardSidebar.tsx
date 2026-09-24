@@ -190,7 +190,7 @@ export function DashboardSidebar() {
 
       <SidebarContent className="pt-3 px-2 overflow-y-auto scrollbar-none">
         {config.navGroups.map((group) => {
-          const visibleItems = group.items.filter((item) => hasPageAccess(orgRole, item.path));
+          const visibleItems = group.items.filter((item) => hasPageAccess(orgRole, item.path, clinicType));
           if (visibleItems.length === 0) return null;
 
           return (
@@ -226,7 +226,7 @@ export function DashboardSidebar() {
           )}
           <SidebarGroupContent>
             <SidebarMenu className="gap-0.5">
-              {sharedNavItems.filter((item) => hasPageAccess(orgRole, item.path)).map((item) => (
+              {sharedNavItems.filter((item) => hasPageAccess(orgRole, item.path, clinicType)).map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <NavItem item={item} fullUrl={`${basePath}/${item.path}`} />
                 </SidebarMenuItem>
@@ -267,7 +267,7 @@ export function DashboardSidebar() {
                 >
                    <span className="text-[13px] font-semibold truncate text-sidebar-foreground leading-tight">{displayName}</span>
                   <span className="text-[10px] text-sidebar-primary font-medium capitalize mt-0.5">
-                    {getRoleLabel(orgRole)}
+                    {getRoleLabel(orgRole, clinicType)}
                   </span>
                 </button>
 
