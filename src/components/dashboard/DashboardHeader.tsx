@@ -101,17 +101,8 @@ export function DashboardHeader({ onToggleAI, aiOpen, appearance = "light", onTo
         )}
       </nav>
 
-      {/* Search */}
-      <div className="relative flex-1 max-w-xs ml-auto">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
-        <Input
-          placeholder="Search…"
-          className="pl-8 pr-14 h-9 text-sm bg-muted/45 border-border focus-visible:bg-card focus-visible:ring-1 focus-visible:ring-primary/30 rounded-sm"
-        />
-        <kbd className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none inline-flex h-5 items-center gap-0.5 rounded border border-border/60 bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
-          <Command className="h-2.5 w-2.5" />K
-        </kbd>
-      </div>
+      {/* Search by name / phone + quick add */}
+      <QuickSearchAdd />
 
       <div className="flex items-center gap-1">
         {onToggleAppearance && (
