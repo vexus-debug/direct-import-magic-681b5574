@@ -225,9 +225,11 @@ const diagnosticNav: NavGroup[] = [
 
 const eyeNav: NavGroup[] = [
   {
-    label: "Overview",
+    label: "Today",
     items: [
-      { title: "Dashboard", path: "dashboard", icon: LayoutDashboard },
+      { title: "Today", path: "dashboard", icon: LayoutDashboard },
+      { title: "Patient Progress", path: "eye/flow", icon: Activity },
+      { title: "Doctor Visit", path: "eye/visit", icon: Stethoscope },
       { title: "Eye Clinic Overview", path: "eye", icon: Eye },
     ],
   },
@@ -238,7 +240,6 @@ const eyeNav: NavGroup[] = [
       { title: "Appointments", path: "appointments", icon: CalendarDays },
       { title: "Waiting List", path: "waiting-list", icon: Clock },
       { title: "Schedules", path: "schedules", icon: CalendarClock },
-      { title: "Prescriptions", path: "prescriptions", icon: Stethoscope },
       { title: "Consent Forms", path: "consent-forms", icon: FileCheck },
       { title: "Reviews", path: "reviews", icon: Star },
     ],
@@ -246,14 +247,19 @@ const eyeNav: NavGroup[] = [
   {
     label: "Eye Clinic",
     items: [
-      { title: "Eye Exams", path: "eye/exams", icon: Eye },
-      { title: "Optical Prescriptions", path: "eye/prescriptions", icon: Glasses },
-      { title: "Contact Lenses", path: "eye/contact-lenses", icon: Contact },
-      { title: "Optical Orders", path: "eye/orders", icon: ShoppingCart },
-      { title: "Diagnostics", path: "eye/diagnostics", icon: Activity },
-      { title: "Eye Results", path: "eye/reports", icon: FileText },
-      { title: "Eye Charts", path: "eye/charts", icon: Activity },
+      { title: "Eye Records", path: "eye/records", icon: FileSearch },
+      { title: "Prescriptions", path: "eye/prescriptions", icon: Glasses },
       { title: "Surgery Bookings", path: "eye/surgery", icon: Scissors },
+      { title: "Surgery Checklists", path: "eye/surgery-checklists", icon: ClipboardList },
+      { title: "Referrals", path: "eye/referrals", icon: Link2 },
+    ],
+  },
+  {
+    label: "Optical",
+    items: [
+      { title: "Glasses Orders", path: "eye/orders", icon: ShoppingCart },
+      { title: "Glasses Pickup", path: "eye/pickup", icon: Bell },
+      { title: "Frames & Lenses", path: "eye/stock", icon: Package },
     ],
   },
   {

@@ -82,16 +82,68 @@ export const PAGE_ROLE_ACCESS: Record<string, OrgRole[]> = {
 };
 
 /**
+ * Eye clinics: menus by job.
+ * receptionist = Front desk, hygienist = Optometrist, dentist = Doctor,
+ * assistant = Optician, accountant = Cashier.
+ */
+const FRONT: OrgRole[] = ["receptionist"];
+const OPTOM: OrgRole[] = ["dentist", "hygienist"];
+const OPTICIAN: OrgRole[] = ["assistant"];
+const CASHIER: OrgRole[] = ["accountant"];
+const ALL_EYE: OrgRole[] = [...FRONT, ...OPTOM, ...OPTICIAN, ...CASHIER, "lab_technician", "lab_assistant"];
+
+export const EYE_PAGE_ROLE_ACCESS: Record<string, OrgRole[]> = {
+  "dashboard": ALL_EYE,
+  "eye": [...FRONT, ...OPTOM],
+  "patients": [...FRONT, ...OPTOM, ...OPTICIAN, ...CASHIER],
+  "appointments": [...FRONT, ...OPTOM],
+  "waiting-list": [...FRONT, ...OPTOM],
+  "schedules": [...FRONT, ...OPTOM],
+  "eye/flow": [...FRONT, ...OPTOM, ...OPTICIAN, ...CASHIER],
+  "eye/visit": OPTOM,
+  "eye/records": OPTOM,
+  "eye/exams": OPTOM,
+  "eye/prescriptions": [...OPTOM, ...OPTICIAN],
+  "prescriptions": OPTOM,
+  "eye/contact-lenses": [...OPTOM, ...OPTICIAN],
+  "eye/orders": [...OPTICIAN, ...FRONT],
+  "eye/pickup": [...OPTICIAN, ...FRONT],
+  "eye/stock": [...OPTICIAN],
+  "eye/diagnostics": [...OPTOM, "lab_technician"],
+  "eye/reports": [...OPTOM, "lab_technician"],
+  "eye/charts": [...OPTOM, "lab_technician"],
+  "eye/surgery": [...OPTOM, ...FRONT],
+  "eye/surgery-checklists": OPTOM,
+  "eye/referrals": [...OPTOM, ...FRONT],
+  "consent-forms": [...FRONT, ...OPTOM],
+  "reviews": FRONT,
+  "billing": [...CASHIER, ...FRONT],
+  "estimates": [...CASHIER, ...FRONT],
+  "payment-plans": CASHIER,
+  "expenses": CASHIER,
+  "revenue-allocation": CASHIER,
+  "profitability": CASHIER,
+  "reports": CASHIER,
+  "analytics": [],
+  "inventory": OPTICIAN,
+  "suppliers": OPTICIAN,
+  "purchase-orders": OPTICIAN,
+  "shop-management": OPTICIAN,
+  "staff": [], "documents": [...FRONT], "audit-log": [], "website-settings": [],
+};
+
+/**
  * Check if a user's org role allows access to a relative page path.
  * orgRole is the user's role within the current organization.
  */
-export function hasPageAccess(orgRole: string, relativePath: string): boolean {
+export function hasPageAccess(orgRole: string, relativePath: string, clinicType?: string): boolean {
   if (orgRole === "owner" || orgRole === "admin") return true;
+  const map = clinicType === "eye" ? { ...PAGE_ROLE_ACCESS, ...EYE_PAGE_ROLE_ACCESS } : PAGE_ROLE_ACCESS;
   // Handle patient profile sub-routes
   if (relativePath.startsWith("patients/")) {
-    return PAGE_ROLE_ACCESS["patients"]?.includes(orgRole as OrgRole) ?? false;
+    return map["patients"]?.includes(orgRole as OrgRole) ?? false;
   }
-  const allowed = PAGE_ROLE_ACCESS[relativePath];
+  const allowed = map[relativePath.split("?")[0]];
   if (!allowed) return true; // unknown paths are accessible
   return allowed.includes(orgRole as OrgRole);
 }
@@ -105,7 +157,16 @@ export function extractRelativePath(pathname: string): string {
   return match ? match[1] : "dashboard";
 }
 
-export function getRoleLabel(role: string): string {
+const EYE_ROLE_LABELS: Record<string, string> = {
+  receptionist: "Front desk",
+  hygienist: "Optometrist",
+  dentist: "Doctor / Optometrist",
+  assistant: "Optician",
+  accountant: "Cashier",
+};
+
+export function getRoleLabel(role: string, clinicType?: string): string {
+  if (clinicType === "eye" && EYE_ROLE_LABELS[role]) return EYE_ROLE_LABELS[role];
   const labels: Record<string, string> = {
     owner: "Owner",
     admin: "Admin",
